@@ -10,17 +10,13 @@ class FileStorage:
 
     def all(self, cls=None):
 	"""returns a dictionary of a __object"""
-	dic = {}
-	if cls:
- 	     dictionary = self.__objects
-	     for key in dictionary:
-		 partition = key.replace('.', ' ')
-		 partition = shlex.split(partition)
-		 if (partition[0] == cls.__name__):
-		     dic[key] = self.__objects[key]
-	     return (dic)
-	else:
-	     return self.__objects	 
+	if cls is not None:
+	     new_dict = {}
+ 	     for key, value in self.__objects.items():
+		 if cls == value.__class__ or cls == value.__class__.__name__:
+		    new_dict[key] = value
+	     return self.__objects
+	return self.__objects	 
 
     def new(self, obj):
         """Adds new object to storage dictionary"""
@@ -38,9 +34,10 @@ class FileStorage:
     def delete(self, obj=None):
         """ delete an existing element
         """
-        if obj:
-            key = "{}.{}".format(type(obj).__name__, obj.id)
-            del self.__objects[key]
+        if obj is not None:
+            key = obj.__class__.__name__ + '.' + obj.id
+	    if key in self.__objects:
+            	del self.__objects[key]
 
 
     def reload(self):
