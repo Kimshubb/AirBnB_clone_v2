@@ -1,1 +1,1 @@
-# This directory contains Flask scripts
+# Solutions to tasks on AirBnB clone - Web framework
